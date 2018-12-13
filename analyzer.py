@@ -3,8 +3,12 @@ import pandas as pd
 import tweepy
 import numpy as np
 import time
+import os
 
-from config import consumer_key, consumer_secret, access_token, access_token_secret
+consumer_key = os.environ['consumer_key']
+consumer_secret = os.environ['consumer_secret']
+access_token = os.environ['access_token']
+access_token_secret = os.environ['access_token_secret']
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from handles import get_handles
 
@@ -24,15 +28,15 @@ def analyzer():
         data_dict['Name'] = tweets[0]['user']['name']
         data_dict['Image'] = tweets[0]['user']['profile_image_url_https'].replace('normal', '400x400')
         data.append(data_dict)
-    
+
     # Setup sentiment analyzer
     analyzer = SentimentIntensityAnalyzer()
-    
+
     # Grab tweets containing the user name of the twitter handle
     for user in data:
         compound_scores = []
         tweets = api.search_users(user['Name'])
-        
+
         # Run sentiment analysis on tweets and append the average
         # compound sentiment score to data
         for tweet in tweets:
@@ -51,5 +55,5 @@ def analyzer():
 
     # Convert the dataframe back to a list of dictionaries
     data_ordered = data_df_sorted.to_dict('records')
-    
+
     return data_ordered
