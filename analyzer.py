@@ -4,7 +4,7 @@ import tweepy
 import numpy as np
 import time
 import os
-
+import requests
 consumer_key = os.environ['consumer_key']
 consumer_secret = os.environ['consumer_secret']
 access_token = os.environ['access_token']
