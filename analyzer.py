@@ -9,6 +9,7 @@ consumer_key = os.environ['consumer_key']
 consumer_secret = os.environ['consumer_secret']
 access_token = os.environ['access_token']
 access_token_secret = os.environ['access_token_secret']
+api_key = os.environ['api_key']
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from handles import get_handles
 
@@ -36,6 +37,8 @@ def analyzer():
     for user in data:
         compound_scores = []
         tweets = api.search_users(user['Name'])
+        query_name = user['Name']
+        articles = requests.get('https://newsapi.org/v2/everything?q=' + query_name + '&language=en' + "&apiKey=" + api_key).json()
 
         # Run sentiment analysis on tweets and append the average
         # compound sentiment score to data
@@ -45,6 +48,12 @@ def analyzer():
                 compound_scores.append(sent['compound'])
             except KeyError:
                 pass
+
+        for article in articles['articles']:
+            if article['content']:
+                senti = analyzer.polarity_scores(article["content"])
+                compound_scores.append(senti['compound'])
+
         user['Score'] = np.mean(compound_scores)
 
     # Convert the list of dictionaries to a dataframe
