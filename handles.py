@@ -13,7 +13,7 @@ api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 
 def get_handles():
     # Grabbing twitter handles to pass to analyzer
-    me = 'erikcaldwell'
+    me = 'tjg_developer'
 
     tweets = api.search(f'@{me} Analyze:')['statuses']
 
