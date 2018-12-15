@@ -5,21 +5,23 @@ d3.json('/data').then(function(data) {
         var results = d3.select("#results")
         results.append("hr")
         results.append("div")
-            .attr("class", "row")
-            .html(
-                `<div class="col-6">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src=${d.Image} alt="Result Image">
-                        <div class="card-body">
-                            <h2 class="card-text">${d.Name}</h2>
-                        </div>
+        .attr("class", "row justify-content-center")
+        .html(
+            `<div class="col-4">
+                <div class="card text-center" style="width: 160px;">
+                    <img class="card-img-top" src=${d.Image} alt="${d.Name} Image">
+                    <div class="card-body">
+                        <h5 class="card-text">
+                        ${d.Name}
+                        </h5>
                     </div>
-                    </div>
-                    <div class="col-6">
-                        <div id=${d.Handle} class="200x160px">
-                        </div>
-                </div>`
-                );
+                </div>
+            </div>
+            <div class="col-4">
+                <div id=${d.Handle} class="250x200px">
+                </div>
+            </div>`
+            );
 
         var g = new JustGage({
             id: d.Handle,
@@ -51,14 +53,3 @@ d3.json('/data').then(function(data) {
         });
     })
 });
-    
-
-// function customValue(val) {
-//     if (val <= -0.051) {
-//         return 'negative';
-//     } else if (val >= 0.051) {
-//         return 'positive';
-//     } else if (val >= -0.05 & val <= 0.05) {
-//         return 'neutral';
-//     }
-// }
